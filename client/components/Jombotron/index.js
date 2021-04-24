@@ -2,14 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledJombotron = styled.div`
-    background-color: #aebadb;
     min-height: 240px;
     display: flex;
     align-items: center;
     justify-content: center;
     h1 {
         margin: 0;
-        color: #fff;
+        color: #aebadb;
         font-size: 100px;
         line-height: 1;
         text-align: center;
@@ -19,7 +18,7 @@ const StyledJombotron = styled.div`
 function Jombotron(props) {
     const {title, className, ...restProps} = props
     return (
-        <StyledJombotron className={className} {...restProps}>
+        <StyledJombotron className={'page-title'} {...restProps}>
             <h1>{title}</h1>
         </StyledJombotron>
     )

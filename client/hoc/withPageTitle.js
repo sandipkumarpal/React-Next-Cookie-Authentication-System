@@ -1,21 +1,19 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { Fragment } from 'react'
 import Jombotron from '../components/Jombotron'
 
-const withPageTitle = (WrappedComponent, defaultsProps) => {
+const withPageTitle = (WrappedComponent, defaultsProps= {}) => {
     const { pageTitle } = defaultsProps
     const hocComponent = (props) => {
         const { className, ...restProps } = props;
         return (
-            <div className={className}>
-                <Jombotron title={pageTitle} />
-                <WrappedComponent {...restProps} />
-            </div>
+            <Fragment>
+                {pageTitle && <Jombotron title={pageTitle} />}
+                <div className="withpageTitle">
+                    <WrappedComponent {...restProps} />
+                </div>
+            </Fragment>
         )
     }
-
-    // hocComponent.propTypes = {
-    // }
 
     return hocComponent
 }

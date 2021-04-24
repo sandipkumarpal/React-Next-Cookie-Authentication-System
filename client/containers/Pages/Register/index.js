@@ -1,10 +1,11 @@
 import React from 'react'
 import withPageTitle from '../../../hoc/withPageTitle'
+import RegisterForm from '../../Register/Form'
 
 function RegisterPage() {
     return (
-        <div>
-            RegisterPage
+        <div style={{ maxWidth: 500, margin: '0 auto'}}>
+            <RegisterForm />
         </div>
     )
 }

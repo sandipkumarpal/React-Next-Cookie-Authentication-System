@@ -14,7 +14,7 @@ function TopMenu() {
     }
     
     return (
-        <Menu mode="horizontal">
+        <Menu mode="horizontal" theme="dark">
             {MENUS.map(item => renderMenus(item))}
         </Menu>
     )
