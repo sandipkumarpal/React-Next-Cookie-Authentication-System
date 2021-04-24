@@ -1,11 +1,8 @@
 import React from 'react'
+import HomePage from '../containers/Pages/Home'
 
 function index() {
-	return (
-		<>
-			<h1>Home Page</h1>
-		</>
-	)
+	return <HomePage />
 }
 
 export default index
