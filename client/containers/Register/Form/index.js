@@ -2,14 +2,10 @@ import React, { useState } from 'react';
 import {
   Form,
   Input,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
   Button,
-  AutoComplete,
 } from 'antd';
+
+import axios from 'axios'
 
 const formItemLayout = {
     labelCol: {
@@ -34,11 +30,14 @@ const formItemLayout = {
     },
   };
 
+const URL = 'http://localhost:8000/api/register'
+
 function RegisterForm() {
     const [form] = Form.useForm();
 
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+    const onFinish = async (values) => {
+      const data = await axios.post(URL, {...values})
+      console.log('RESPONSE REGISTER: Received values of form: ', data);
     };
     return (
         <Form
@@ -50,12 +49,12 @@ function RegisterForm() {
             scrollToFirstError
             >
             <Form.Item
-                name="nickname"
-                label="Nickname"
+                name="name"
+                label="Name"
                 tooltip="What do you want others to call you?"
-                rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
+                rules={[{ required: true, message: 'Please input your Name!', whitespace: true }]}
             >
-                <Input />
+                <Input size="large" />
             </Form.Item>
 
             <Form.Item
@@ -72,7 +71,7 @@ function RegisterForm() {
                 },
                 ]}
             >
-                <Input />
+                <Input size="large" />
             </Form.Item>
 
             <Form.Item
@@ -84,9 +83,9 @@ function RegisterForm() {
                     message: 'Please input your password!',
                 },
                 ]}
-                hasFeedback
+                // hasFeedback
             >
-                <Input.Password />
+                <Input.Password size="large" />
             </Form.Item>
 
             <Form.Item
@@ -94,13 +93,11 @@ function RegisterForm() {
                 label="Phone Number"
                 rules={[{ required: true, message: 'Please input your phone number!' }]}
             >
-                <Input style={{ width: '100%' }} />
+                <Input size="large"/>
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit">
-                Register
-                </Button>
+                <Button type="primary" htmlType="submit" block size="large">Register</Button>
             </Form.Item>
             </Form>
     )
