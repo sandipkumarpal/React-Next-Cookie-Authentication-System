@@ -1,12 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Link from 'next/link';
+import { Typography } from 'antd';
 import withPageTitle from '../../../hoc/withPageTitle'
+import withToastHandler from '../../../hoc/withToastHandler';
+import LoginForm from '../../Login/Form'
+import { getLoginService } from '../../../config/api';
+
+const { Text } = Typography;
 
 function LoginPage(props) {
+    const { setErrorHandler, setSuccessHandler } = props;
+    const [loader, setLoader] = useState(false)
+
+    const onHandleSubmit = async (values) => {
+        setLoader(true)
+        try {
+            const data = await axios.post(getLoginService(), {...values})
+            console.log('RESPONSE LOGIN: Received values of form: ', data);
+            setSuccessHandler(data)
+          } catch (err) {
+            setErrorHandler(err)
+          } finally {
+            setLoader(false)
+         }
+    }
+
     return (
-        <div>
-            Login
+        <div style={{ maxWidth: 500, margin: '0 auto'}}>
+            <LoginForm handleFormSubmit={onHandleSubmit} loader={loader}/>
+            <p style={{textAlign: 'center'}}>
+                <Text type="secondary" style={{textAlign: 'center'}}>Not yet registered? <Link href="/register"><a>Register</a></Link></Text>
+            </p>
         </div>
     )
 }
 
-export default LoginPage
+export default withToastHandler(LoginPage)
