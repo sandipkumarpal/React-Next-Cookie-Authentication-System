@@ -1,9 +1,8 @@
 import User from '../models/user'
-import {getHashedPassword, comparePassword} from '../utils/auth'
+import { getHashedPassword, comparePassword } from '../utils/auth'
+import jwt from 'jsonwebtoken';
 
 export const register = async (req, res) => {
-    // console.log(req.body)
-    // res.send('Register use response from controller!!')
     try {
         const { name, password, email, phone } = req.body
         // Validation
@@ -29,6 +28,35 @@ export const register = async (req, res) => {
 
         console.log("Save user", user)
         return res.json({ ok: true})
+
+    } catch (error) {
+        console.log({error})
+        return res.status(400).send('Error Somthing Wrong')
+    }
+}
+
+export const login = async (req, res) => {
+    try {
+        const { password, email } = req.body
+        // Validation
+        let user = await User.findOne({ email }).exec()
+        if(!user) return res.status(400).send("No User found! Please try again.");
+
+        const checkedhashPassword = await comparePassword(password, user.password)
+
+        if (!checkedhashPassword) {
+            return res.status(400).send("Wrong Password!!");
+        }
+
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" })
+        
+        user.password = undefined;
+
+        res.cookie("token", token, {
+            httpOnly: true
+        })
+
+        return res.json(user)
 
     } catch (error) {
         console.log({error})
