@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Form,
-  Input,
-  Button,
-} from 'antd';
-
+import { Form, Input, Button } from 'antd';
 import axios from 'axios'
 import withToastHandler from '../../../hoc/withToastHandler';
 
@@ -36,15 +31,19 @@ const URL = 'http://localhost:8000/api/register'
 function RegisterForm(props) {
     const { setErrorHandler, setSuccessHandler } = props;
     const [form] = Form.useForm();
+    const [loader, setLoader] = useState(false)
 
     const onHandleSubmit = async (values) => {
+      setLoader(true)
       try {
         const data = await axios.post(URL, {...values})
         console.log('RESPONSE REGISTER: Received values of form: ', data);
         setSuccessHandler(data)
       } catch (err) {
         setErrorHandler(err)
-      }
+      } finally {
+        setLoader(false)
+     }
     };
     return (
         <Form
@@ -104,7 +103,7 @@ function RegisterForm(props) {
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit" block size="large">Register</Button>
+                <Button type="primary" htmlType="submit" block size="large" loading={loader}>Register</Button>
             </Form.Item>
             </Form>
     )
