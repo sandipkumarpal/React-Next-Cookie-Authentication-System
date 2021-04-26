@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import axios from 'axios'
 import withToastHandler from '../../../hoc/withToastHandler';
+import { getRegisterService } from '../../../config/api';
 
 const formItemLayout = {
     labelCol: {
@@ -26,8 +27,6 @@ const formItemLayout = {
     },
   };
 
-const URL = 'http://localhost:8000/api/register'
-
 function RegisterForm(props) {
     const { setErrorHandler, setSuccessHandler } = props;
     const [form] = Form.useForm();
@@ -36,7 +35,7 @@ function RegisterForm(props) {
     const onHandleSubmit = async (values) => {
       setLoader(true)
       try {
-        const data = await axios.post(URL, {...values})
+        const data = await axios.post(getRegisterService(), {...values})
         console.log('RESPONSE REGISTER: Received values of form: ', data);
         setSuccessHandler(data)
       } catch (err) {
