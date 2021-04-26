@@ -6,6 +6,7 @@ import {
 } from 'antd';
 
 import axios from 'axios'
+import withToastHandler from '../../../hoc/withToastHandler';
 
 const formItemLayout = {
     labelCol: {
@@ -32,19 +33,25 @@ const formItemLayout = {
 
 const URL = 'http://localhost:8000/api/register'
 
-function RegisterForm() {
+function RegisterForm(props) {
+    const { setErrorHandler, setSuccessHandler } = props;
     const [form] = Form.useForm();
 
-    const onFinish = async (values) => {
-      const data = await axios.post(URL, {...values})
-      console.log('RESPONSE REGISTER: Received values of form: ', data);
+    const onHandleSubmit = async (values) => {
+      try {
+        const data = await axios.post(URL, {...values})
+        console.log('RESPONSE REGISTER: Received values of form: ', data);
+        setSuccessHandler(data)
+      } catch (err) {
+        setErrorHandler(err)
+      }
     };
     return (
         <Form
             {...formItemLayout}
             form={form}
             name="register"
-            onFinish={onFinish}
+            onFinish={onHandleSubmit}
             initialValues={{}}
             scrollToFirstError
             >
@@ -103,4 +110,4 @@ function RegisterForm() {
     )
 }
 
-export default RegisterForm
+export default withToastHandler(RegisterForm)

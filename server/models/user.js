@@ -20,7 +20,7 @@ const userSchema = new Schema({
         max: 64
     },
     phone: {
-        type: Number,
+        type: String,
         require: true
     },
     picture: {
