@@ -3,7 +3,7 @@ import bcrypt, { hash } from 'bcrypt'
 const saltRounds = 12;
 
 // Generate a salt and hash
-export const hasPassword = (password) => {
+export const getHashedPassword = (password) => {
     return new Promise((resolve, reject) => {
         bcrypt.genSalt(saltRounds, (err, salt) => {
             if (err) {
