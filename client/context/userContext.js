@@ -17,7 +17,12 @@ const UserProvider = ({ children }) => {
         router.push('/')
         return setUserLogin(dispatch, data)
     };
-    const getUserLogout = () => setUserLogout(dispatch);
+    const getUserLogout = async () => {
+        await router.push('/').then(() => {
+            window.location.reload()
+        })
+        return await setUserLogout(dispatch, {})
+    };
 
     const checkedSessionStorage = () => {
         const data = getUserFromSessionStorage()

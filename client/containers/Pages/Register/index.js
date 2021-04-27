@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 import { Typography } from 'antd';
@@ -6,12 +6,16 @@ import withPageTitle from '../../../hoc/withPageTitle'
 import RegisterForm from '../../Register/Form'
 import withToastHandler from '../../../hoc/withToastHandler';
 import { getRegisterService } from '../../../config/api';
+import { useRouter } from 'next/router';
+import { useUser } from '../../../context/userContext';
 
 const { Text } = Typography;
 
 function RegisterPage(props) {
     const { setErrorHandler, setSuccessHandler } = props;
     const [loader, setLoader] = useState(false)
+    const { user } = useUser()
+    const router = useRouter()
 
     const onHandleSubmit = async (values) => {
         setLoader(true)
@@ -25,6 +29,11 @@ function RegisterPage(props) {
             setLoader(false)
          }
     }
+
+    useEffect(() => {
+        if (Object.keys(user).length !== 0) { return router.push('/') }
+    }, [user])
+
     return (
         <div style={{ maxWidth: 500, margin: '0 auto'}}>
             <RegisterForm handleFormSubmit={onHandleSubmit} loader={loader}/>

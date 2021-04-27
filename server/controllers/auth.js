@@ -63,3 +63,13 @@ export const login = async (req, res) => {
         return res.status(400).send('Error Somthing Wrong')
     }
 }
+
+export const logout = async (req, res) => {
+    try {
+        await res.clearCookie("token")
+        return await res.json({ message: 'Successfully Signout!'})
+    } catch (error) {
+        console.log({error})
+        return res.status(400).send('Error Somthing Wrong')
+    }
+}

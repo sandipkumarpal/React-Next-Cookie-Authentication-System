@@ -13,7 +13,7 @@ export const userReducer = (state, action) => {
         case userActionType.LOGIN:
             return {...state, user: payload}
         case userActionType.LOGOUT:
-            return {...state, user: null}
+            return {...state, user: payload}
         default:
             return state;
     }
@@ -24,7 +24,7 @@ export const setUserLogin = (dispatch, data) => {
     return dispatch({ type: userActionType.LOGIN, payload: data })
 }
 
-export const setUserLogout = (dispatch) => {
+export const setUserLogout = async (dispatch, data) => {
     removeUserFromSessionStorage()
-    return dispatch({ type: userActionType.LOGOUT })
+    return await dispatch({ type: userActionType.LOGOUT, payload: data })
 }
