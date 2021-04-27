@@ -6,18 +6,21 @@ import withPageTitle from '../../../hoc/withPageTitle'
 import withToastHandler from '../../../hoc/withToastHandler';
 import LoginForm from '../../Login/Form'
 import { getLoginService } from '../../../config/api';
+import { useUser } from '../../../context/userContext';
 
 const { Text } = Typography;
 
 function LoginPage(props) {
     const { setErrorHandler, setSuccessHandler } = props;
     const [loader, setLoader] = useState(false)
+    const { getUserLogin } = useUser()
 
     const onHandleSubmit = async (values) => {
         setLoader(true)
         try {
-            const data = await axios.post(getLoginService(), {...values})
+            const { data } = await axios.post(getLoginService(), {...values})
             console.log('RESPONSE LOGIN: Received values of form: ', data);
+            getUserLogin(data)
             setSuccessHandler(data)
           } catch (err) {
             setErrorHandler(err)
