@@ -24,6 +24,7 @@ function LoginPage(props) {
             console.log('RESPONSE LOGIN: Received values of form: ', data);
             getUserLogin(data)
             setSuccessHandler(data)
+            router.push('/')
           } catch (err) {
             setErrorHandler(err)
           } finally {
@@ -32,7 +33,9 @@ function LoginPage(props) {
     }
 
     useEffect(() => {
-        if (Object.keys(user).length !== 0) { return router.push('/') }
+        if (Object.keys(user).length !== 0) {
+            return router.push('/')
+        }
     }, [user])
 
     return (

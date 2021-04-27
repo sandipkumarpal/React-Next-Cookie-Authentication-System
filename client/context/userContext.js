@@ -15,7 +15,6 @@ const UserProvider = ({ children }) => {
         if (!data) {
             return
         }
-        router.push('/')
         return setUserLogin(dispatch, data)
     };
     const getUserLogout = async () => {

@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import csrf from 'csurf';
 import { readdirSync } from 'fs';
-// import cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 const morgan = require('morgan')
 // import mongoose
 const mongoose = require("mongoose");
@@ -33,8 +33,8 @@ mongoose.connect(process.env.MONGO_URI, {
 // apply middlewares
 app.use(cors())
 app.use(express.json())
+app.use(cookieParser())
 app.use(morgan("dev"))
-// app.use(cookieParser())
 
 // app.use((req, res, next) => {
 //     console.log("This is my own middlewares")
