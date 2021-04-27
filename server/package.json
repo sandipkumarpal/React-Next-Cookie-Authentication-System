@@ -19,5 +19,9 @@
     "mongoose": "^5.12.5",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "csurf": "^1.11.0",
+    "express-jwt": "^6.0.0"
   }
 }

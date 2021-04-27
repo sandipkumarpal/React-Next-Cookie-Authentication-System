@@ -73,3 +73,14 @@ export const logout = async (req, res) => {
         return res.status(400).send('Error Somthing Wrong')
     }
 }
+
+export const currentUser = async (req, res) => {
+    try {
+        let user = await User.findById(req.user._id).select("_password").exec();
+        console.log('CURRENT USER', {user})
+        return res.json(user)
+    } catch (error) {
+        console.log({error})
+        return res.status(400).send('Error Somthing Wrong')
+    }
+}
